@@ -7,6 +7,7 @@ import java.util.List;
 public class Paciente {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String ultimoNome;
     private String primeiroNome;
