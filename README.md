@@ -22,4 +22,9 @@
 #### * Critérios de Aceitação:
 ##### 1. Ao clicar no Link "Analisar" na página principal, o usuário deveria ser direcionado para a página, onde ele pode ver as últimas entradas para vários dados clínicos.
 ##### 2. O índice de massa corporal (IMC), deveria ser mostrado na tela se baseando na altura e peso do paciente.
-##### 3. O usuário deveria ver um Link para um Gráfico que mostrará uma leitura clínica numa linha em um gráfico de linhas ao longo do tempo
+##### 3. O usuário deveria ver um Link para um Gráfico que mostrará uma leitura clínica numa linha em um gráfico de linhas ao longo do tempo.
+## Passos
+### 1. Criar o Database, Tabelas e fazer Inserts
+### 2. Criar as Entidades
+### 3. Criar os Repositories para cada Entidade.
+### 4. Criar a Rest Controller para expor externamente a Rest API.
