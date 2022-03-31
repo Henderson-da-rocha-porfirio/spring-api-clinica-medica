@@ -1,8 +1,8 @@
 # Clínica App
 ## US = User Stories
-### US_1 - Como uma pessoa atendente de consultório médico, eu quero vir todos os pacientes registrados
+### US_1 - Como uma pessoa atendente de consultório médico, eu quero vir todos os pacientes registrados ( /paciente )
 #### * Critérios de Aceitação:
-##### 1. Mostrar em tela todos os detalhes dos pacientes com o seu id, primeiroNome, ultimoNome e idade.
+##### 1. Mostrar em tela todos os detalhes dos pacientes com o seu id, primeiroNome, ultimoNome e idade: " /pacienteDetalhes/1 ", onde 1 seria o ID correspondente.
 ##### 2. Mostrar em tela o Link para entrar nos dados da clínica para cada paciente.
 ##### 3. Mostrar em tela o Link para analisar dados para cada paciente.
 ##### 4. Mostrar em tela o Link para registrar novos pacientes.
