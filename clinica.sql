@@ -1,7 +1,5 @@
 create database clinica
 
-use clinicals;
-
 CREATE TABLE paciente (
     id Serial NOT NULL,
     ultimo_nome varchar(255) NOT NULL,
