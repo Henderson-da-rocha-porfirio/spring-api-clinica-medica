@@ -1,7 +1,6 @@
 package com.tuyo.clinicaapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -12,6 +11,10 @@ public class ClinicaData {
     private String componenteValue;
     private Timestamp MeasuredDateTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)                                // Estamos lendo os dados de Paciente através de ClinicaData
+    @JoinColumn(name = "paciente_id",nullable = false)               // Tabela responsável pelo Join
+    private Paciente paciente;                                      // Tudo isso está assegurando que quando estou salvando o dado, a validação de ClinicaData acontece corretamente no nível JPA.
+                                                                    // Algumas exceções podem acontecer se eu tentar injetar clinicaldata sem o ID do Paciente.
     public int getId() {
         return id;
     }

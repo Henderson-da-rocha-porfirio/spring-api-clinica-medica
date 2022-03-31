@@ -1,7 +1,7 @@
 package com.tuyo.clinicaapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Paciente {
@@ -11,6 +11,11 @@ public class Paciente {
     private String ultimoNome;
     private String primeiroNome;
     private int idade;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "paciente")                  // Relacionamento OneToMany.
+    private List<ClinicaData> clinicaData;                                          // ALL = significa que quero usar todas as possibilidades na tabela Paciente. Mas toda a ação de Paciente, impacta em ClinicaData. Se deletar o Paciente. Todos os dados da Tabela clinicadata serão apagados.
+                                                                                    // Fetch = é o Default para o Lazy Fetch. Quando o Paciente for buscado automaticamente, clinicaldata não será apresentado imediatamente, apenas quando for usada na aplicação.
+                                                                                     // Definir Lista privada de Clinical Data
 
     public int getId() {
         return id;
