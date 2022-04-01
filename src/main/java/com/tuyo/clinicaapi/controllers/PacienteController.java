@@ -1,12 +1,16 @@
 package com.tuyo.clinicaapi.controllers;
 
+import com.tuyo.clinicaapi.dto.ClinicaDataRequest;
+import com.tuyo.clinicaapi.model.ClinicaData;
 import com.tuyo.clinicaapi.model.Paciente;
 import com.tuyo.clinicaapi.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
+                                                                        // ****** Rest Controller ******
 
 @RestController                                                         // Isso realiza um restfull controller.
 @RequestMapping("/api")                                                 // Mapear a Path URL
@@ -19,6 +23,9 @@ public class PacienteController {                                       // Isso 
         this.repository = repository;                                   // Dentro deste construtor, this.repository é igual ao repository que receberemos como um construtor
                                                                         // Traz a injeção a esse repositório para o nosso runtime
     }
+
+
+                                                                        // ******  US_1 - Como uma pessoa atendente de consultório médico, eu quero vir todos os pacientes registrados ******
 
     @RequestMapping(value = "/pacientes", method = RequestMethod.GET)   // Método GET é usado no RequestMethod quando os dados já existem. Ele obtém o que já existe.
     public List<Paciente> getPacientes() {
@@ -39,6 +46,8 @@ public class PacienteController {                                       // Isso 
                                                                         // TESTANDO NO POSTMAN ( LISTAR PACIENTES ): Escolher o método GET, e com o app funcionando, digitar no Postman: localhost:8080/clinicaservices/api/pacientes
 
 
+                                                                        // ******  US_1 - Mostrar em tela todos os detalhes dos pacientes com o seu id, primeiroNome, ultimoNome e idade ******
+
     @RequestMapping(value = "/pacientes/{id}", method = RequestMethod.GET)  // Método GET é usado no RequestMethod quando os dados já existem. Ele obtém o que já existe.
     public  Paciente getPaciente(@PathVariable("id")  int id) {
 
@@ -50,6 +59,8 @@ public class PacienteController {                                       // Isso 
                                                                         // TESTANDO NO POSTMAN ( LISTAR PACIENTES POR ID ): Escolher o método GET, e com o app funcionando, digitar no Postman: localhost:8080/clinicaservices/api/pacientes/1
 
 
+                                                                        // ******  US_2 - Como uma pessoa atendente de consultório médico, eu quero registrar um novo paciente. ******
+
                                                                         // Método POST é usado no RequestMethod quando se está CRIANDO algo.
                                                                         // Esse método é usado no link: "Registrar Paciente" da primeira página
     @RequestMapping(value = "/pacientes", method = RequestMethod.POST)  // /{id} é removido daqui pela simples razão de que nós estamos adicionando um novo paciente a coleção de paciente.
@@ -58,9 +69,27 @@ public class PacienteController {                                       // Isso 
         return repository.save(paciente);                               // Mas quando o paciente, passado no parâmetro do método save, diante da resposta que retorna, qualquer uma que retornar terá um campo ID também.
     }                                                                   // @RequestBody = é necessário marcar para que o Spring não serialize a request automaticamente.
                                                                         // TESTANDO NO POSTMAN ( SALVAR PACIENTES ): Escolher o método POST, e com o app funcionando, digitar no Postman: localhost:8080/clinicaservices/api/pacientes
-}                                                                       // Antes de enviar, selecionar no menu: " Body " -> " raw " -> JSON (application/json)
+                                                                     // Antes de enviar, selecionar no menu: " Body " -> " raw " -> JSON (application/json)
                                                                         // {
                                                                         //    "ultimoNome": "Balman",
                                                                         //    "primeiroNome": "Sigmund",
                                                                         //    "idade": 33
                                                                         //}
+
+                                                                         // ******  US_4 - Como uma pessoa atendente de consultório médico, eu quero analisar e ver um relatório dos últimos testes ******
+
+    @RequestMapping(value = "/pacientes/analise/{id}", method = RequestMethod.GET)      // Método Analise para a URI /pacientes/analise/{id}
+    public Paciente analyze(@PathVariable("id")  int id) {                              // Pegando o id
+        Paciente paciente = repository.findById(id).get();                              // Buscando a informação do Paciente de informação do paciente.
+        List<ClinicaData> clinicadata = paciente.getClinicaData();                      // Pegando os dados da clinica.
+        ArrayList<ClinicaData> duplicadaClinicaData = new ArrayList<>(clinicadata);     // Duplicando uma nova lista de arrays. Passando clinicadata como parâmetro no construtor
+                                                                                        // Fazendo um loop por meio de duplicadaClinicaData e fazendo mudanças a clinicadata de List<ClinicaData...
+        for(ClinicaData eachEntry:duplicadaClinicaData) {
+                                                                                        // A lista duplicada onde ocorre o looping, sofre a manipulação dentro do for
+        }
+        return paciente;
+
+    }
+
+
+}
