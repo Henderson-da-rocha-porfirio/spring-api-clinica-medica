@@ -18,7 +18,6 @@ public class ClinicaData {
     private String componenteValue;
     @Column(name = "measured_date_time")
     private Timestamp MeasuredDateTime;
-
     @ManyToOne(fetch = FetchType.LAZY)                                // Estamos lendo os dados de Paciente através de ClinicaData
     @JoinColumn(name = "paciente_id",nullable = false)               // Tabela responsável pelo Join
     private Paciente paciente;                                      // Tudo isso está assegurando que quando estou salvando o dado, a validação de ClinicaData acontece corretamente no nível JPA.
@@ -55,5 +54,13 @@ public class ClinicaData {
 
     public void setMeasuredDateTime(Timestamp measuredDateTime) {
         MeasuredDateTime = measuredDateTime;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

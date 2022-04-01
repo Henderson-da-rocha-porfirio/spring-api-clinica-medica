@@ -56,7 +56,7 @@ public class PacienteController {                                       // Isso 
     public Paciente savePaciente(@RequestBody Paciente paciente) {                  // Ele pega paciente passado no parâmetro. Salva paciente passado no parâmetro do método save. E o método save retornará novamente ao paciente salvo passado no parâmetro e terão um ID também.
                                                                         // Então, quando o paciente chega, não vai ter um ID único, ele será criado no Database. Isso é um campo de auto-incremento.
         return repository.save(paciente);                               // Mas quando o paciente, passado no parâmetro do método save, diante da resposta que retorna, qualquer uma que retornar terá um campo ID também.
-    }                                                                   // RequestBody = o Spring se ligará a esse ou a entrada Json à esse Paciente.
+    }                                                                   // @RequestBody = é necessário marcar para que o Spring não serialize a request automaticamente.
                                                                         // TESTANDO NO POSTMAN ( SALVAR PACIENTES ): Escolher o método POST, e com o app funcionando, digitar no Postman: localhost:8080/clinicaservices/api/pacientes
 }                                                                       // Antes de enviar, selecionar no menu: " Body " -> " raw " -> JSON (application/json)
                                                                         // {
