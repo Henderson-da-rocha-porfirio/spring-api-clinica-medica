@@ -12,7 +12,7 @@
 ##### 2. O usuário deveria ver um formulário que que ele possa preencher com detalhes na tela do paciente como: primeiroNome, ultimoNome e idade.
 ##### 3. Quando clicar no botão "Confirmar", o dado deveria ser salvo e ter uma mensagem de confirmação. E essa deveria aparecer em tela.
 ##### 4. O usuário deveria estar hábil para navegar de "volta" (Back) à página principal.
-### US_3 - Como uma pessoa atendente de consultório médico, eu quero acessar dados clínicos por paciente individualmente
+### US_3 - Como uma pessoa atendente de consultório médico, eu quero acessar e salvar dados clínicos por paciente individualmente
 #### * Critérios de Aceitação:
 ##### 1. Ao clicar no Link "Adicionar" na página principal, o usuário deveria navegar no dado clínico em tela inteira.
 ##### 2. O usuário deveria ver um formulário que ele possa preencher com detalhes sobre o paciente como pa (pressão arterial), altura, peso e frequência cardíaca.
