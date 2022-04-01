@@ -140,6 +140,8 @@ insert into clinicadata  values('99', '10', 'heartrate', '89', '2019-05-29 19:34
 
 select setval('paciente_id_seq', (select max(id) from paciente))
 
+select setval('clinicadata_id_seq', (select max(id) from clinicadata))
+
 
 
 -- Exemplo de Correcao de erro em postgresql onde não se consegue salvar novos ID's: Erro: duplicate key value violates unique constraint
