@@ -4,10 +4,7 @@ import com.tuyo.clinicaapi.model.Paciente;
 import com.tuyo.clinicaapi.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +36,8 @@ public class PacienteController {                                       // Isso 
                                                                         // 3. Injetou o PacienteRepository
                                                                         // 4. Injetou com o @autowired
                                                                         // 5. Get foi implementado com getPacientes que retorna todas as informações dos pacientes
+                                                                        // TESTANDO NO POSTMAN ( LISTAR PACIENTES ): Escolher o método GET, e com o app funcionando, digitar no Postman: localhost:8080/clinicaservices/api/pacientes
+
 
     @RequestMapping(value = "/pacientes/{id}", method = RequestMethod.GET)  // Método GET é usado no RequestMethod quando os dados já existem. Ele obtém o que já existe.
     public  Paciente getPaciente(@PathVariable("id")  int id) {
@@ -48,14 +47,20 @@ public class PacienteController {                                       // Isso 
                                                                         // @PathVariable = tem que ser usada essa anotação Spring. E dentro do brackets vai o id: ("id")
      }                                                                  // O mesmo nome usado em: "/pacientes/{id}", no caso id, tem que ser o mesmo passado em: @PathVariable("id"), também id.
                                                                         // Nesse caso, o Spring injetará isso como uma @PathVariable("id")  int id
+                                                                        // TESTANDO NO POSTMAN ( LISTAR PACIENTES POR ID ): Escolher o método GET, e com o app funcionando, digitar no Postman: localhost:8080/clinicaservices/api/pacientes/1
 
 
                                                                         // Método POST é usado no RequestMethod quando se está CRIANDO algo.
                                                                         // Esse método é usado no link: "Registrar Paciente" da primeira página
     @RequestMapping(value = "/pacientes", method = RequestMethod.POST)  // /{id} é removido daqui pela simples razão de que nós estamos adicionando um novo paciente a coleção de paciente.
-    public  Paciente savePaciente(Paciente paciente) {                  // Ele pega paciente passado no parâmetro. Salva paciente passado no parâmetro do método save. E o método save retornará novamente ao paciente salvo passado no parâmetro e terão um ID também.
+    public Paciente savePaciente(@RequestBody Paciente paciente) {                  // Ele pega paciente passado no parâmetro. Salva paciente passado no parâmetro do método save. E o método save retornará novamente ao paciente salvo passado no parâmetro e terão um ID também.
                                                                         // Então, quando o paciente chega, não vai ter um ID único, ele será criado no Database. Isso é um campo de auto-incremento.
         return repository.save(paciente);                               // Mas quando o paciente, passado no parâmetro do método save, diante da resposta que retorna, qualquer uma que retornar terá um campo ID também.
-    }
-
-}
+    }                                                                   // RequestBody = o Spring se ligará a esse ou a entrada Json à esse Paciente.
+                                                                        // TESTANDO NO POSTMAN ( SALVAR PACIENTES ): Escolher o método POST, e com o app funcionando, digitar no Postman: localhost:8080/clinicaservices/api/pacientes
+}                                                                       // Antes de enviar, selecionar no menu: " Body " -> " raw " -> JSON (application/json)
+                                                                        // {
+                                                                        //    "ultimoNome": "Balman",
+                                                                        //    "primeiroNome": "Sigmund",
+                                                                        //    "idade": 33
+                                                                        //}

@@ -7,9 +7,11 @@ import java.util.List;
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String ultimoNome;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)         // Esse ID é um campo auto-incremento no Database. Então por isso precisamos indicar isso ao Hibernate usando o @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;                                             // Contudo, será criado no Database sem problemas. Mas o ID quando retornar ao Client (database), ele será zerado automaticamente, e o Hibernate não pegará o valor do Database.
+    @Column(name = "ultimo_nome")
+    private String ultimoNome;                                  // @GeneratedValue(strategy = GenerationType.IDENTITY) também precisa ser adicionado ao ClinicaData.
+    @Column(name = "primeiro_nome")
     private String primeiroNome;
     private int idade;
 

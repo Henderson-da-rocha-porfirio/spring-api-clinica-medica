@@ -10,10 +10,13 @@ import java.sql.Timestamp;
 @JsonIgnoreProperties({"paciente"})                                 // Utilizar @JsonIgnoreProperties, para que esta informação paciente seja ignorada pela serialização ocorrida em ClinicaData.
 public class ClinicaData {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)             // Para evitar salvamentos em sequência devido não ser uma sequência mas auto-incremento. Tipo, salvar o paciente joão duas ou mais vezes no database, quando não precisa salvar um novo Id todas as vezes.
-    private int id;
-    private String componenteNome;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)             //Esse ID é um campo auto-incremento no Database. Então por isso precisamos indicar isso ao Hibernate usando o @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;                                                 // Contudo, será criado no Database sem problemas. Mas o ID quando retornar ao Client (database), ele será zerado automaticamente, e o Hibernate não pegará o valor do Database.
+    @Column(name = "componente_nome")
+    private String componenteNome;                                  // @GeneratedValue(strategy = GenerationType.IDENTITY) também precisa ser adicionado ao Paciente.
+    @Column(name = "componente_value")
     private String componenteValue;
+    @Column(name = "measured_date_time")
     private Timestamp MeasuredDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)                                // Estamos lendo os dados de Paciente através de ClinicaData
