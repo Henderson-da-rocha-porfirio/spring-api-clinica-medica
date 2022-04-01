@@ -8,16 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-                                                                        // ****** Rest Controller ******
+// ****** Rest Controller ******
 
 @RestController                                                         // Isso realiza um restfull controller.
 @RequestMapping("/api")                                                 // Mapear a Path URL
 public class PacienteController {                                       // Isso se tornará um restfull Controller.
                                                                         // US1: 1. Mostrar em tela todos os detalhes dos pacientes com o seu id, primeiroNome, ultimoNome e idade.
     private PacienteRepository repository;                              // Este método tanto faz a lista de importação de nomes, bem como o controle de um paciente.
-                                                                        // E dentro deste método, necessitamos acessar o repositório, então aperte o controle um para "adicionar" uma declaração escrita
+    Map<String, String> filters = new HashMap<>();                      // E dentro deste método, necessitamos acessar o repositório, então aperte o controle um para "adicionar" uma declaração escrita
     @Autowired                                                          // Construtor injetor
     PacienteController(PacienteRepository repository){                  // @Autowired = injeção de dependência. Essa anotação diz ao Spring que esse bean em particular tem que ser autowired (injetado ou auto-injetado) no Controller
         this.repository = repository;                                   // Dentro deste construtor, this.repository é igual ao repository que receberemos como um construtor
@@ -79,16 +81,38 @@ public class PacienteController {                                       // Isso 
                                                                          // ******  US_4 - Como uma pessoa atendente de consultório médico, eu quero analisar e ver um relatório dos últimos testes ******
 
     @RequestMapping(value = "/pacientes/analise/{id}", method = RequestMethod.GET)      // Método Analise para a URI /pacientes/analise/{id}
-    public Paciente analyze(@PathVariable("id")  int id) {                              // Pegando o id
+    public Paciente analise(@PathVariable("id")  int id) {                              // Pegando o id
         Paciente paciente = repository.findById(id).get();                              // Buscando a informação do Paciente de informação do paciente.
-        List<ClinicaData> clinicadata = paciente.getClinicaData();                      // Pegando os dados da clinica.
-        ArrayList<ClinicaData> duplicadaClinicaData = new ArrayList<>(clinicadata);     // Duplicando uma nova lista de arrays. Passando clinicadata como parâmetro no construtor
-                                                                                        // Fazendo um loop por meio de duplicadaClinicaData e fazendo mudanças a clinicadata de List<ClinicaData...
-        for(ClinicaData eachEntry:duplicadaClinicaData) {
-                                                                                        // A lista duplicada onde ocorre o looping, sofre a manipulação dentro do for
-        }
-        return paciente;
+        List<ClinicaData> clinicaData = paciente.getClinicaData();                      // Pegando os dados da clinica.
+        ArrayList<ClinicaData> duplicadaClinicaData = new ArrayList<>(clinicaData);     // Duplicando uma nova lista de arrays. Passando clinicaData como parâmetro no construtor
+                                                                                        // Fazendo um loop por meio de duplicadaClinicaData e fazendo mudanças a clinicaData de List<ClinicaData...
+        for(ClinicaData eachEntrada:duplicadaClinicaData) {                             // A lista duplicada onde ocorre o looping, sofre a manipulação dentro do for
+            /* if(eachEntrada.getComponenteNome().equals("ap"));*/                       // Lógica de conversão BMI (IMC): ap = altura e peso ( hw = height and weight
 
+            if (filters.containsKey(eachEntrada.getComponenteNome())) {                  // As entradas que tivermos de "ap" não serão duplicadas pela condição abaixo: introdução dessa lógica filters. Só serão adicionados na primeira vez por sofrer a filtragem.
+                clinicaData.remove(eachEntrada);                                        // Inicialmente, estamos checando se filters tem "ap", os filtros ficarão vazios. E Aqui, eachEntrada.getComponenteNome(),
+                continue;                                                            // Essa condição não será aceita se os filtros estiverem vazios e sendo usados a primeira vez.     // estamos checando se, por exemplo, cada ComponenteNome é "ap".
+            } else {                                                                // O loop acontece aqui a primeira vez. Vamos pegar o "ap" se ele estiver aqui
+                filters.put(eachEntrada.getComponenteNome(), null);                 // value pode ficar null, porque não importa qual valor irá entrar.
+            }                                                                   // Ele colocará o put neste else se a condição acima não for satisfeita. Então ele porá (put will) a entrada "ap" nestes filtros de Map.
+                                                                                // Se quisermos que a condição abaixo seja executada, tem que adicionar uma condição: somente se o ComponenteNome for altura e peso.
+            if (eachEntrada.getComponenteNome().equals("ap"))                               {// Antes de convertermos a altura em metros aqui, daí é melhor adicionar um "if", se altura e peso for not = null ( ! ).
+                String[] alturaEPeso = eachEntrada.getComponenteValue().split("/"); // Agora, "altura" tem o índex [0] e "peso" [1].
+                if (alturaEPeso != null && alturaEPeso.length > 1) {
+                    float alturaEmMetros = Float.parseFloat(alturaEPeso[0]) * 0.4536F;       // É preciso converter altura em metros
+                    float imc = Float.parseFloat(alturaEPeso[1]) / (alturaEmMetros * alturaEmMetros);  // Calcular o IMC (BMI)
+                    ClinicaData imcData = new ClinicaData();                                 // No Database, altura e peso, estão como ap = 190/80 ( 1,90 altura e 80 de peso ). Então precisamos deixá-los separados.
+                    imcData.setComponenteNome("imc");                                         // Método Split para divisão de arrays: 190/90 ficando 190 e 90 separados por uma "/"
+                    imcData.setComponenteValue(Float.toString(imc));                          // É necessário ainda "setar" uma nova clínica.
+                    clinicaData.add(imcData);
+                }                                                                          // Enquanto estiver no looping de cada entrada clínica, estaremos pegando a altura e o peso.
+
+            }
+        }
+        filters.clear();                                                                    // Todas as vezes que o ponto onde estão os filtros forem invocados " filters.containsKey e etc ",
+        return paciente;                                                                    // os filtros serão limpos. Então, antes de fazer o retorno, devemos fazer com que os filters de Paciente sejam limpos.
+                                                                                            // O loop obtendo sucesso, o "else" nunca será executado, a fim de evitar a duplicação. Por isso que ele fará o clear alí.
+                                                                                            // Chegado aqui, ainda não é o fim: é preciso adicionar o @JsonIgnore em Paciente declarado como atributo em ClinicaData.
     }
 
 

@@ -1,5 +1,6 @@
 package com.tuyo.clinicaapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -20,7 +21,9 @@ public class ClinicaData {
     private Timestamp MeasuredDateTime;
     @ManyToOne(fetch = FetchType.LAZY)                                // Estamos lendo os dados de Paciente através de ClinicaData
     @JoinColumn(name = "paciente_id",nullable = false)               // Tabela responsável pelo Join
-    private Paciente paciente;                                      // Tudo isso está assegurando que quando estou salvando o dado, a validação de ClinicaData acontece corretamente no nível JPA.
+    @JsonIgnore                                                      // Necessário colocar o JsonIgnore. OU do contrário fará " loop infinito " porque Paciente está retornado de Paciente de PacienteController no final do método analise.
+    private Paciente paciente;                                      // JsonIgnore serializa paciente e acha ClinicaData. Ele então também serializa ClinicaData dentro de ClinicaData. E por isso que o loop nunca acontecerá.
+                                                                    // Tudo isso está assegurando que quando estou salvando o dado, a validação de ClinicaData acontece corretamente no nível JPA.
                                                                     // Algumas exceções podem acontecer se eu tentar injetar clinicaldata sem o ID do Paciente.
                                                                     // Quando a serialização acontece, ela fica num loop terntando serializar o dado paciente.
                                                                     // Para resolver isso, derveríamos ignorar colocando " transient " dessa forma: private transient Paciente paciente;
