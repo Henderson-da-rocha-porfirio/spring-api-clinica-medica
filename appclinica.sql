@@ -1,4 +1,9 @@
+-- Database
+
 create database clinica
+
+
+-- Table paciente
 
 CREATE TABLE paciente (
     id Serial NOT NULL,
@@ -7,6 +12,9 @@ CREATE TABLE paciente (
     idade int,
     PRIMARY KEY (id)
 );
+
+
+-- Table clinicadata
 
 CREATE TABLE clinicadata (
     id serial NOT NULL,
@@ -19,10 +27,15 @@ CREATE TABLE clinicadata (
   REFERENCES paciente(id)
 );
 
+-- Selects
+
 SELECT * FROM paciente
 SELECT * FROM clinicadata
 
+
+
 -- insert paciente
+
 insert into paciente values(1,'John','Mccain',52);
 insert into paciente values(2,'Siva','Shankar',32);
 insert into paciente values(3,'Anthony','Simon',22);
@@ -35,7 +48,9 @@ insert into paciente values(9,'Rose','Tanic',29);
 insert into paciente values(10,'Rowling','Lte',49);
 
 
--- insert clinicadata
+
+-- insert clinicadata bp
+
 insert into clinicadata  values('1', '1', 'bp', '67/119', '2018-07-09 19:34:24');
 insert into clinicadata  values('2', '2', 'bp', '63/115', '2018-06-19 19:34:24');	
 insert into clinicadata  values('3', '3', 'bp', '72/129', '2018-07-26 19:34:24');
@@ -86,6 +101,9 @@ insert into clinicadata  values('47', '8', 'bp', '50/109', '2019-02-15 19:34:24'
 insert into clinicadata  values('48', '9', 'bp', '67/119', '2019-04-19 19:34:24');
 insert into clinicadata  values('49', '10', 'bp', '37/89', '2019-05-29 19:34:24');
 
+
+-- insert clinicadata heartrate
+
 insert into clinicadata  values('51', '1', 'heartrate', '67', '2018-07-09 19:34:24');
 insert into clinicadata  values('52', '2', 'heartrate', '115', '2018-06-19 19:34:24');	
 insert into clinicadata  values('53', '3', 'heartrate', '72', '2018-07-26 19:34:24');
@@ -135,6 +153,8 @@ insert into clinicadata  values('96', '7', 'heartrate', '55', '2019-02-21 19:34:
 insert into clinicadata  values('97', '8', 'heartrate', '50', '2019-02-15 19:34:24');
 insert into clinicadata  values('98', '9', 'heartrate', '67', '2019-04-19 19:34:24');
 insert into clinicadata  values('99', '10', 'heartrate', '89', '2019-05-29 19:34:24');
+
+
 
 -- Depois dos Inserts, realizar seval para permitir inserção de novos ID's:
 
