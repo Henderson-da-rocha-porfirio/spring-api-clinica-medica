@@ -5,15 +5,13 @@ import com.tuyo.clinicaapi.model.ClinicaData;
 import com.tuyo.clinicaapi.model.Paciente;
 import com.tuyo.clinicaapi.repository.ClinicaDataRepository;
 import com.tuyo.clinicaapi.repository.PacienteRepository;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ClinicaDataController {
                                                                                         // Este método irá receber um "request" que conterá o componente_nome e componente_value. E também o paciente_id.
            private ClinicaDataRepository clinicosRepo;                                       // Busca(fetch) pelo paciente

@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController                                                         // Isso realiza um restfull controller.
 @RequestMapping("/api")                                                 // Mapear a Path URL
+@CrossOrigin                                                             // Precisamos dessa anotation " @CrossOrigin ", para que haja comunicação entre as aplicações, porque o REACT JS correrá numa porta diferente: localhost:3000 e o BackEnd correrá no localhost:8080
 public class PacienteController {                                       // Isso se tornará um restfull Controller.
                                                                         // US1: 1. Mostrar em tela todos os detalhes dos pacientes com o seu id, primeiroNome, ultimoNome e idade.
     private PacienteRepository repository;                              // Este método tanto faz a lista de importação de nomes, bem como o controle de um paciente.
