@@ -1,9 +1,9 @@
-package com.tuyo.clinicaapi.dto;
+package com.tuyo.clinicaapi.controllers.dto;
 
 public class ClinicaDataRequest {                       // DTO = DATA TRANSFER OBJECT
-       private String componenteNome;                  // Este DTO deveria ter três campos:
-       private String componenteValue;
-       private int pacienteId;
+    private String componenteNome;                  // Este DTO deveria ter três campos:
+    private String componenteValue;
+    private int pacienteId;
 
     public String getComponenteNome() {
         return componenteNome;

@@ -1,13 +1,11 @@
 package com.tuyo.clinicaapi.controllers;
 
-import com.tuyo.clinicaapi.dto.ClinicaDataRequest;
+import com.tuyo.clinicaapi.controllers.dto.ClinicaDataRequest;
 import com.tuyo.clinicaapi.model.ClinicaData;
 import com.tuyo.clinicaapi.model.Paciente;
 import com.tuyo.clinicaapi.repository.ClinicaDataRepository;
 import com.tuyo.clinicaapi.repository.PacienteRepository;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
