@@ -1,6 +1,6 @@
 # Clínica App
 
-## [ APP COM REACT ](https://github.com/Henderson-da-rocha-porfirio/react-clinica-medica-frontend)
+## App (frontend): [REACT ](https://github.com/Henderson-da-rocha-porfirio/react-clinica-medica-frontend)
 
 ## US = User Stories
 ### US_1 - Como uma pessoa atendente de consultório médico, eu quero vir todos os pacientes registrados ( /paciente )
